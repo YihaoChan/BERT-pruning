@@ -54,7 +54,7 @@ python3 corpus_vocab.py
 python3 pretrain.py
 ```
 
-模型和配置文件生成在`./pretrained_bert`目录下。
+BERT和配置文件生成在`./pretrained_bert`目录下。
 
 **微调**：
 
@@ -62,7 +62,7 @@ python3 pretrain.py
 python3 train.py
 ```
 
-完整模型的路径：`./trained_models/model.pth`。
+model的路径：`./trained_models/model.pth`。
 
 **在测试集上推理**：
 
@@ -90,7 +90,7 @@ python3 prune.py --to-be-pruned-path ./trained_models/model.pth --prune-bert-sav
 python3 train_val.py --pretrained-bert-dir ./pruned_bert/$PRUNED_BERT_DIR$/$PRUNING_CONFIG$ --train-model-save-dir ./pruned_models/$PRUNED_BERT_DIR$/$PRUNING_CONFIG$
 ```
 
-剪枝后微调过的含全连接层的模型路径：`./pruned_models/$PRUNED_BERT_DIR$/$PRUNING_CONFIG$/model.pth`。
+剪枝后微调过的model路径：`./pruned_models/$PRUNED_BERT_DIR$/$PRUNING_CONFIG$/model.pth`。
 
 **在测试集上推理**：
 
