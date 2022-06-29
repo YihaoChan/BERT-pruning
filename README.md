@@ -33,7 +33,7 @@ TextPruner库支持Vocabulary Pruning和Transformer Pruning。由于采用Train 
 评估指标：1 - mlogloss；预训练轮数：100；微调轮数：10。
 
 |   Experiment    | target_ffn_size | target_num_of_heads | n_iters | head_even_masking | use_logits | Metric     | FLOPs (G) | Params (M) |
-| :-------------: | --------------- | ------------------- | ------- | ----------------- | ---------- | ---------- |-----------|------------|
+| :-------------: | :-------------: | :-----------------: | :-----: | :---------------: | :--------: | :--------: |:---------:|:----------:|
 |    Baseline     | -               | -                   | -       | -                 | -          | 0.8990     | 21.74    | 102.3     |
 |   Pruning - 1   | 1536            | 6                   | 1       | True              | False      | 0.9175     | 10.87    | 59.8      |
 |   Pruning - 2   | 1536            | 6                   | 16      | False             | True       | 0.9193     | 10.92    | 60.0      |
