@@ -17,9 +17,7 @@ textpruner
 
 ## 3 流程
 
-TextPruner库支持Vocabulary Pruning和Transformer Pruning。由于采用Train From
-Scratch，即：使用给定数据集上的文本语料进行预训练，并不像已经开源的BERT权重一样，在大规模语料库上训练，并在下游小任务上微调。因此，词典里的token都会在下游任务上见到，所以并不需要进行Vocabulary
-Pruning，仅采用Transformer Pruning即可。
+TextPruner库支持Vocabulary Pruning和Transformer Pruning。由于采用Train From Scratch，即：使用给定数据集上的文本语料进行预训练，并不像已经开源的BERT权重一样，在大规模语料库上训练，并在下游小任务上微调。因此，词典里的token都会在下游任务上见到，所以并不需要进行Vocabulary Pruning，仅采用Transformer Pruning即可。
 
 1、基于训练集和测试集的文本语料，进行BERT预训练；
 
@@ -72,19 +70,19 @@ model的路径：`./trained_models/model.pth`。
 **在测试集上推理**：
 
 ```python
-python3 evaluate.py - -evaluate - model - path. / trained_models / model.pth - -pretrained - bert - dir. / pretrained_bert /
+python3 evaluate.py --evaluate-model-path ./trained_models/model.pth --pretrained-bert-dir ./pretrained_bert/
 ```
 
 **分析参数量**：
 
 ```python
-python3 analyze.py - -to - be - analyzed - path. / trained_models / model.pth - -pretrained - bert - dir. / pretrained_bert /
+python3 analyze.py --to-be-analyzed-path ./trained_models/model.pth --pretrained-bert-dir ./pretrained_bert/
 ```
 
 **剪枝**：
 
 ```python
-python3 prune.py - -to - be - pruned - path. / trained_models / model.pth - -prune - bert - save - dir. / pruned_bert /$PRUNED_BERT_DIR$
+python3 prune.py --to-be-pruned-path ./trained_models/model.pth --prune-bert-save-dir ./pruned_bert/$PRUNED_BERT_DIR$
 ```
 
 `./pruned_bert/$PRUNED_BERT_DIR$/{PRUNING_CONFIG}`目录下，存放了剪枝后的BERT以及新的配置文件。
@@ -92,7 +90,7 @@ python3 prune.py - -to - be - pruned - path. / trained_models / model.pth - -pru
 **再微调**：
 
 ```python
-python3 train_val.py - -pretrained - bert - dir. / pruned_bert /$PRUNED_BERT_DIR$ / $PRUNING_CONFIG$ --train - model - save - dir. / pruned_models /$PRUNED_BERT_DIR$ / $PRUNING_CONFIG$
+python3 train_val.py --pretrained-bert-dir ./pruned_bert/$PRUNED_BERT_DIR$/$PRUNING_CONFIG$ --train-model-save-dir ./pruned_models/$PRUNED_BERT_DIR$/$PRUNING_CONFIG$
 ```
 
 剪枝后微调过的model路径：`./pruned_models/$PRUNED_BERT_DIR$/$PRUNING_CONFIG$/model.pth`。
@@ -100,14 +98,13 @@ python3 train_val.py - -pretrained - bert - dir. / pruned_bert /$PRUNED_BERT_DIR
 **在测试集上推理**：
 
 ```python
-python3 evaluate.py - -evaluate - model - path. / pruned_models /$PRUNED_BERT_DIR$ / $PRUNING_CONFIG$ / model.pth - -pretrained - bert - dir. / pruned_bert /$PRUNED_BERT_DIR$ / $PRUNING_CONFIG$
+python3 evaluate.py --evaluate-model-path ./pruned_models/$PRUNED_BERT_DIR$/$PRUNING_CONFIG$/model.pth --pretrained-bert-dir ./pruned_bert/$PRUNED_BERT_DIR$/$PRUNING_CONFIG$
 ```
 
 **分析参数量**：
 
 ```python
-python3 analyze.py - -to - be - analyzed - path. / pruned_models /$PRUNED_BERT_DIR$ / $PRUNING_CONFIG$ / model.pth - -pretrained - bert - dir. / pruned_bert /$PRUNED_BERT_DIR} / {
-    PRUNING_CONFIG}
+python3 analyze.py --to-be-analyzed-path ./pruned_models/$PRUNED_BERT_DIR$/$PRUNING_CONFIG$/model.pth --pretrained-bert-dir ./pruned_bert/$PRUNED_BERT_DIR}/{PRUNING_CONFIG}
 ```
 
 ## 参考链接
