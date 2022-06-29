@@ -50,15 +50,13 @@ A: 可能说明了这一点：原来的BERT在这个任务上是过拟合的，�
 **生成语料库、词典**：
 
 ```python
-python3
-corpus_vocab.py
+python3 corpus_vocab.py
 ```
 
 **预训练**：
 
 ```python
-python3
-pretrain.py
+python3 pretrain.py
 ```
 
 BERT和配置文件生成在`./pretrained_bert`目录下。
@@ -66,8 +64,7 @@ BERT和配置文件生成在`./pretrained_bert`目录下。
 **微调**：
 
 ```python
-python3
-train_val.py
+python3 train_val.py
 ```
 
 model的路径：`./trained_models/model.pth`。
@@ -75,22 +72,19 @@ model的路径：`./trained_models/model.pth`。
 **在测试集上推理**：
 
 ```python
-python3
-evaluate.py - -evaluate - model - path. / trained_models / model.pth - -pretrained - bert - dir. / pretrained_bert /
+python3 evaluate.py - -evaluate - model - path. / trained_models / model.pth - -pretrained - bert - dir. / pretrained_bert /
 ```
 
 **分析参数量**：
 
 ```python
-python3
-analyze.py - -to - be - analyzed - path. / trained_models / model.pth - -pretrained - bert - dir. / pretrained_bert /
+python3 analyze.py - -to - be - analyzed - path. / trained_models / model.pth - -pretrained - bert - dir. / pretrained_bert /
 ```
 
 **剪枝**：
 
 ```python
-python3
-prune.py - -to - be - pruned - path. / trained_models / model.pth - -prune - bert - save - dir. / pruned_bert /$PRUNED_BERT_DIR$
+python3 prune.py - -to - be - pruned - path. / trained_models / model.pth - -prune - bert - save - dir. / pruned_bert /$PRUNED_BERT_DIR$
 ```
 
 `./pruned_bert/$PRUNED_BERT_DIR$/{PRUNING_CONFIG}`目录下，存放了剪枝后的BERT以及新的配置文件。
@@ -98,8 +92,7 @@ prune.py - -to - be - pruned - path. / trained_models / model.pth - -prune - ber
 **再微调**：
 
 ```python
-python3
-train_val.py - -pretrained - bert - dir. / pruned_bert /$PRUNED_BERT_DIR$ / $PRUNING_CONFIG$ --train - model - save - dir. / pruned_models /$PRUNED_BERT_DIR$ / $PRUNING_CONFIG$
+python3 train_val.py - -pretrained - bert - dir. / pruned_bert /$PRUNED_BERT_DIR$ / $PRUNING_CONFIG$ --train - model - save - dir. / pruned_models /$PRUNED_BERT_DIR$ / $PRUNING_CONFIG$
 ```
 
 剪枝后微调过的model路径：`./pruned_models/$PRUNED_BERT_DIR$/$PRUNING_CONFIG$/model.pth`。
@@ -107,15 +100,13 @@ train_val.py - -pretrained - bert - dir. / pruned_bert /$PRUNED_BERT_DIR$ / $PRU
 **在测试集上推理**：
 
 ```python
-python3
-evaluate.py - -evaluate - model - path. / pruned_models /$PRUNED_BERT_DIR$ / $PRUNING_CONFIG$ / model.pth - -pretrained - bert - dir. / pruned_bert /$PRUNED_BERT_DIR$ / $PRUNING_CONFIG$
+python3 evaluate.py - -evaluate - model - path. / pruned_models /$PRUNED_BERT_DIR$ / $PRUNING_CONFIG$ / model.pth - -pretrained - bert - dir. / pruned_bert /$PRUNED_BERT_DIR$ / $PRUNING_CONFIG$
 ```
 
 **分析参数量**：
 
 ```python
-python3
-analyze.py - -to - be - analyzed - path. / pruned_models /$PRUNED_BERT_DIR$ / $PRUNING_CONFIG$ / model.pth - -pretrained - bert - dir. / pruned_bert /$PRUNED_BERT_DIR} / {
+python3 analyze.py - -to - be - analyzed - path. / pruned_models /$PRUNED_BERT_DIR$ / $PRUNING_CONFIG$ / model.pth - -pretrained - bert - dir. / pruned_bert /$PRUNED_BERT_DIR} / {
     PRUNING_CONFIG}
 ```
 
