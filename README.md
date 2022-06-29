@@ -31,13 +31,18 @@ TextPruner库支持Vocabulary Pruning和Transformer Pruning。由于采用Train 
 
 评估指标：1 - mlogloss；预训练轮数：100；微调轮数：10。
 
-| Experiment      | target_ffn_size     | target_num_of_heads | n_iters | head_even_masking     | use_logits | Metric     | Memory Usage (MB) |
+| Experiment      | target_ffn_size     | target_num_of_heads | n_iters | head_even_masking     | use_logits | Metric     | Params |
 | --------------- | ------- | -------- | ------- | --------- | ---------- | ---------- | ----------------- |
-| Baseline        | -       | -        | -       | -         | -          | 0.8990     | 390.17            |
-| Pruning - 1     | 1536    | 6        | 1       | True      | False      | 0.9175     | 228.80            |
-| Pruning - 2     | 1536    | 6        | 16      | False     | True       | 0.9193     | 228.80            |
-| **Pruning - 3** | **768** | **4**    | **16**  | **False** | **True**   | **0.9114** | **157.50**        |
-| Pruning - 4     | 384     | 1        | 16      | False     | True       | 0.8930     | 106.46            |
+| Baseline        | -       | -        | -       | -         | -          | 0.8990     | 102,281,233
+            |
+| Pruning - 1     | 1536    | 6        | 1       | True      | False      | 0.9175     | 59,781,649
+            |
+| Pruning - 2     | 1536    | 6        | 16      | False     | True       | 0.9193     | 59,978,449
+            |
+| **Pruning - 3** | **768** | **4**    | **16**  | **False** | **True**   | **0.9114** | **41,287,057
+**        |
+| Pruning - 4     | 384     | 1        | 16      | False     | True       | 0.8930     | 27,906,961
+            |
 
 Q: 压缩后的模型怎么分类效果比不剪枝的模型还好？
 
