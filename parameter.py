@@ -38,8 +38,6 @@ def build_parser():
 
     parser.add_argument('--to-be-pruned-path', type=str, default='./trained_models/model.pth')
 
-    parser.add_argument('--to-be-analyzed-path', type=str, default='./pruned_models/model.pth')
-
     parser.add_argument('--evaluate-model-path', type=str, default='./trained_models/model.pth')
 
     return parser

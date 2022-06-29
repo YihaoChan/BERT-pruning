@@ -13,6 +13,7 @@ transformers >= 4.0
 sentencepiece
 protobuf == 3.20.x
 textpruner
+thop == 0.0.31.post2005241907
 ```
 
 ## 3 流程
@@ -31,13 +32,13 @@ TextPruner库支持Vocabulary Pruning和Transformer Pruning。由于采用Train 
 
 评估指标：1 - mlogloss；预训练轮数：100；微调轮数：10。
 
-| Experiment      | target_ffn_size | target_num_of_heads | n_iters | head_even_masking | use_logits | Metric     | Params    |
-| --------------- | --------------- | ------------------- | ------- | ----------------- | ---------- | ---------- | --------- |
-| Baseline        | -               | -                   | -       | -                 | -          | 0.8990     | 102.3M    |
-| Pruning - 1     | 1536            | 6                   | 1       | True              | False      | 0.9175     | 59.8M     |
-| Pruning - 2     | 1536            | 6                   | 16      | False             | True       | 0.9193     | 60.0M     |
-| **Pruning - 3** | **768**         | **4**               | **16**  | **False**         | **True**   | **0.9114** | **41.3M** |
-| Pruning - 4     | 384             | 1                   | 16      | False             | True       | 0.8930     | 27.9M     |
+|   Experiment    | target_ffn_size | target_num_of_heads | n_iters | head_even_masking | use_logits | Metric     | FLOPs (G) | Params (M) |
+| :-------------: | --------------- | ------------------- | ------- | ----------------- | ---------- | ---------- |-----------|------------|
+|    Baseline     | -               | -                   | -       | -                 | -          | 0.8990     | 21.74    | 102.3     |
+|   Pruning - 1   | 1536            | 6                   | 1       | True              | False      | 0.9175     | 10.87    | 59.8      |
+|   Pruning - 2   | 1536            | 6                   | 16      | False             | True       | 0.9193     | 10.92    | 60.0      |
+| **Pruning - 3** | **768**         | **4**               | **16**  | **False**         | **True**   | **0.9114** | **6.14** | **41.3**  |
+|   Pruning - 4   | 384             | 1                   | 16      | False             | True       | 0.8930     | 2.72     | 27.9      |
 
 Q: 压缩后的模型怎么分类效果比不剪枝的模型还好？
 
@@ -73,10 +74,10 @@ model的路径：`./trained_models/model.pth`。
 python3 evaluate.py --evaluate-model-path ./trained_models/model.pth --pretrained-bert-dir ./pretrained_bert/
 ```
 
-**分析参数量**：
+**分析计算量、参数量**：
 
 ```python
-python3 analyze.py --to-be-analyzed-path ./trained_models/model.pth --pretrained-bert-dir ./pretrained_bert/
+python3 flops_params.py --pretrained-bert-dir ./pretrained_bert/
 ```
 
 **剪枝**：
@@ -101,10 +102,10 @@ python3 train_val.py --pretrained-bert-dir ./pruned_bert/$PRUNED_BERT_DIR$/$PRUN
 python3 evaluate.py --evaluate-model-path ./pruned_models/$PRUNED_BERT_DIR$/$PRUNING_CONFIG$/model.pth --pretrained-bert-dir ./pruned_bert/$PRUNED_BERT_DIR$/$PRUNING_CONFIG$
 ```
 
-**分析参数量**：
+**分析计算量、参数量**：
 
 ```python
-python3 analyze.py --to-be-analyzed-path ./pruned_models/$PRUNED_BERT_DIR$/$PRUNING_CONFIG$/model.pth --pretrained-bert-dir ./pruned_bert/$PRUNED_BERT_DIR}/{PRUNING_CONFIG}
+python3 flops_params.py --pretrained-bert-dir ./pruned_bert/$PRUNED_BERT_DIR}/{PRUNING_CONFIG}
 ```
 
 ## 参考链接
