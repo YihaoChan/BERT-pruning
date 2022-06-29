@@ -17,7 +17,9 @@ textpruner
 
 ## 3 流程
 
-TextPruner库支持Vocabulary Pruning和Transformer Pruning。由于采用Train From Scratch，即：使用给定数据集上的文本语料进行预训练，并不像已经开源的BERT权重一样，在大规模语料库上训练，并在下游小任务上微调。因此，词典里的token都会在下游任务上见到，所以并不需要进行Vocabulary Pruning，仅采用Transformer Pruning即可。
+TextPruner库支持Vocabulary Pruning和Transformer Pruning。由于采用Train From
+Scratch，即：使用给定数据集上的文本语料进行预训练，并不像已经开源的BERT权重一样，在大规模语料库上训练，并在下游小任务上微调。因此，词典里的token都会在下游任务上见到，所以并不需要进行Vocabulary
+Pruning，仅采用Transformer Pruning即可。
 
 1、基于训练集和测试集的文本语料，进行BERT预训练；
 
@@ -31,7 +33,7 @@ TextPruner库支持Vocabulary Pruning和Transformer Pruning。由于采用Train 
 
 评估指标：1 - mlogloss；预训练轮数：100；微调轮数：10。
 
-| Experiment      | ffn     | num_head | n_iters | even      | use_logits | Metric     | Memory Usage (MB) |
+| Experiment      | target_ffn_size     | target_num_of_heads | n_iters | head_even_masking     | use_logits | Metric     | Memory Usage (MB) |
 | --------------- | ------- | -------- | ------- | --------- | ---------- | ---------- | ----------------- |
 | Baseline        | -       | -        | -       | -         | -          | 0.8990     | 390.17            |
 | Pruning - 1     | 1536    | 6        | 1       | True      | False      | 0.9175     | 228.80            |
@@ -48,13 +50,15 @@ A: 可能说明了这一点：原来的BERT在这个任务上是过拟合的，�
 **生成语料库、词典**：
 
 ```python
-python3 corpus_vocab.py
+python3
+corpus_vocab.py
 ```
 
 **预训练**：
 
 ```python
-python3 pretrain.py
+python3
+pretrain.py
 ```
 
 BERT和配置文件生成在`./pretrained_bert`目录下。
@@ -62,7 +66,8 @@ BERT和配置文件生成在`./pretrained_bert`目录下。
 **微调**：
 
 ```python
-python3 train_val.py
+python3
+train_val.py
 ```
 
 model的路径：`./trained_models/model.pth`。
@@ -70,19 +75,22 @@ model的路径：`./trained_models/model.pth`。
 **在测试集上推理**：
 
 ```python
-python3 evaluate.py --evaluate-model-path ./trained_models/model.pth --pretrained-bert-dir ./pretrained_bert/
+python3
+evaluate.py - -evaluate - model - path. / trained_models / model.pth - -pretrained - bert - dir. / pretrained_bert /
 ```
 
 **分析参数量**：
 
 ```python
-python3 analyze.py --to-be-analyzed-path ./trained_models/model.pth --pretrained-bert-dir ./pretrained_bert/
+python3
+analyze.py - -to - be - analyzed - path. / trained_models / model.pth - -pretrained - bert - dir. / pretrained_bert /
 ```
 
 **剪枝**：
 
 ```python
-python3 prune.py --to-be-pruned-path ./trained_models/model.pth --prune-bert-save-dir ./pruned_bert/$PRUNED_BERT_DIR$
+python3
+prune.py - -to - be - pruned - path. / trained_models / model.pth - -prune - bert - save - dir. / pruned_bert /$PRUNED_BERT_DIR$
 ```
 
 `./pruned_bert/$PRUNED_BERT_DIR$/{PRUNING_CONFIG}`目录下，存放了剪枝后的BERT以及新的配置文件。
@@ -90,7 +98,8 @@ python3 prune.py --to-be-pruned-path ./trained_models/model.pth --prune-bert-sav
 **再微调**：
 
 ```python
-python3 train_val.py --pretrained-bert-dir ./pruned_bert/$PRUNED_BERT_DIR$/$PRUNING_CONFIG$ --train-model-save-dir ./pruned_models/$PRUNED_BERT_DIR$/$PRUNING_CONFIG$
+python3
+train_val.py - -pretrained - bert - dir. / pruned_bert /$PRUNED_BERT_DIR$ / $PRUNING_CONFIG$ --train - model - save - dir. / pruned_models /$PRUNED_BERT_DIR$ / $PRUNING_CONFIG$
 ```
 
 剪枝后微调过的model路径：`./pruned_models/$PRUNED_BERT_DIR$/$PRUNING_CONFIG$/model.pth`。
@@ -98,13 +107,16 @@ python3 train_val.py --pretrained-bert-dir ./pruned_bert/$PRUNED_BERT_DIR$/$PRUN
 **在测试集上推理**：
 
 ```python
-python3 evaluate.py --evaluate-model-path ./pruned_models/$PRUNED_BERT_DIR$/$PRUNING_CONFIG$/model.pth --pretrained-bert-dir ./pruned_bert/$PRUNED_BERT_DIR$/$PRUNING_CONFIG$
+python3
+evaluate.py - -evaluate - model - path. / pruned_models /$PRUNED_BERT_DIR$ / $PRUNING_CONFIG$ / model.pth - -pretrained - bert - dir. / pruned_bert /$PRUNED_BERT_DIR$ / $PRUNING_CONFIG$
 ```
 
 **分析参数量**：
 
 ```python
-python3 analyze.py --to-be-analyzed-path ./pruned_models/$PRUNED_BERT_DIR$/$PRUNING_CONFIG$/model.pth --pretrained-bert-dir ./pruned_bert/$PRUNED_BERT_DIR}/{PRUNING_CONFIG}
+python3
+analyze.py - -to - be - analyzed - path. / pruned_models /$PRUNED_BERT_DIR$ / $PRUNING_CONFIG$ / model.pth - -pretrained - bert - dir. / pruned_bert /$PRUNED_BERT_DIR} / {
+    PRUNING_CONFIG}
 ```
 
 ## 参考链接
