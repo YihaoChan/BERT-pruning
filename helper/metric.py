@@ -25,4 +25,4 @@ def metric(outputs, labels):
 
     mlogloss = np.sum(allloss) / outputs_len
 
-    return 1 - 2 * mlogloss
+    return 1 - mlogloss

@@ -26,13 +26,12 @@ test_loader = DataLoader(
     test_dataset, batch_size=args.batch_size, shuffle=True, num_workers=args.num_workers
 )
 
-print(summary(model))
-
 general_config = GeneralConfig(use_device='auto', output_dir=args.prune_bert_save_dir)
 
 transformer_pruning_config = TransformerPruningConfig(
-    target_ffn_size=1536, target_num_of_heads=6,
-    pruning_method='iterative', n_iters=16, head_even_masking=False, use_logits=True)
+    target_ffn_size=384, target_num_of_heads=1,
+    pruning_method='iterative', n_iters=16,
+    head_even_masking=False, use_logits=True)
 
 pruner = TransformerPruner(model, transformer_pruning_config=transformer_pruning_config, general_config=general_config)
 

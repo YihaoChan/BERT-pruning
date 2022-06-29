@@ -31,10 +31,13 @@ TextPruner库支持Vocabulary Pruning和Transformer Pruning。由于采用Train 
 
 评估指标：1 - mlogloss；预训练轮数：100；微调轮数：10。
 
-| Mode     | Metric | Memory Usage (MB) |
-| -------- | ------ | ----------------- |
-| Training | 0.798  | 390.17            |
-| Pruning  | 0.836  | 228.80            |
+| Experiment      | ffn     | num_head | n_iters | even      | use_logits | Metric     | Memory Usage (MB) |
+| --------------- | ------- | -------- | ------- | --------- | ---------- | ---------- | ----------------- |
+| Baseline        | -       | -        | -       | -         | -          | 0.8990     | 390.17            |
+| Pruning - 1     | 1536    | 6        | 1       | True      | False      | 0.9175     | 228.80            |
+| Pruning - 2     | 1536    | 6        | 16      | False     | True       | 0.9193     | 228.80            |
+| **Pruning - 3** | **768** | **4**    | **16**  | **False** | **True**   | **0.9114** | **157.50**        |
+| Pruning - 4     | 384     | 1        | 16      | False     | True       | 0.8930     | 106.46            |
 
 Q: 压缩后的模型怎么分类效果比不剪枝的模型还好？
 
@@ -59,7 +62,7 @@ BERT和配置文件生成在`./pretrained_bert`目录下。
 **微调**：
 
 ```python
-python3 train.py
+python3 train_val.py
 ```
 
 model的路径：`./trained_models/model.pth`。
