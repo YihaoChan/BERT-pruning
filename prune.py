@@ -6,15 +6,12 @@ from torch.utils.data import DataLoader
 from helper.dataset import TextDataset
 from evaluate import test_pro
 import numpy as np
-import torch
 from parameter import get_parameter
 
 args = get_parameter()
 
 model = BertForSequenceClassification.from_pretrained(args.pretrained_bert_dir, num_labels=17,
                                                       problem_type='multi_label_classification')
-
-model.load_state_dict(torch.load(args.to_be_pruned_path))
 
 tokenizer = BertTokenizer.from_pretrained(args.pretrained_bert_dir)
 

@@ -36,8 +36,6 @@ def build_parser():
     parser.add_argument('--prune-bert-save-dir', type=str,
                         help='pruned BERT save directory', default='./pruned_bert')
 
-    parser.add_argument('--to-be-pruned-path', type=str, default='./trained_models/model.pth')
-
     parser.add_argument('--evaluate-model-path', type=str, default='./trained_models/model.pth')
 
     return parser

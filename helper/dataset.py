@@ -1,8 +1,7 @@
 # -*- coding: UTF-8 -*-
 from torch.utils.data import Dataset
-import numpy as np
 from parameter import get_parameter
-
+import torch
 
 class TextDataset(Dataset):
     def __init__(self, df, idx):
@@ -57,4 +56,4 @@ class TextDataset(Dataset):
 
         label = self.get_dummy(label)
 
-        return {'input_ids': np.array(padding_des), 'labels': np.array(label)}
+        return {'input_ids': torch.tensor(padding_des, dtype=torch.long), 'labels': torch.tensor(label, dtype=torch.long)}

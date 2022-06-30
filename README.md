@@ -7,12 +7,12 @@
 ## 2 实验环境
 
 ```
-python >= 3.7
-torch >= 1.7
-transformers >= 4.0
-sentencepiece
-protobuf == 3.20.x
-textpruner
+python == 3.9
+torch == 1.7.1
+transformers == 4.20.1
+sentencepiece == 0.1.96
+protobuf == 3.20.0
+textpruner == 1.1.post1
 thop == 0.0.31.post2005241907
 ```
 
@@ -83,7 +83,7 @@ python3 flops_params.py --pretrained-bert-dir ./pretrained_bert/
 **剪枝**：
 
 ```python
-python3 prune.py --to-be-pruned-path ./trained_models/model.pth --prune-bert-save-dir ./pruned_bert/$PRUNED_BERT_DIR$
+python3 prune.py --prune-bert-save-dir ./pruned_bert/$PRUNED_BERT_DIR$
 ```
 
 `./pruned_bert/$PRUNED_BERT_DIR$/{PRUNING_CONFIG}`目录下，存放了剪枝后的BERT以及新的配置文件。

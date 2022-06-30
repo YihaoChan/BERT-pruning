@@ -72,12 +72,12 @@ def cal_plm_flops(args, num_labels, model, tokenizer, max_seq_length):
     print("******FLOPs: %.2fG******" % (2 * total_ops / (1000 ** 3)))  # MACs * 2 = FLOPs
 
 
-def cal_plm_params(args, model):
+def cal_plm_params(model):
     print(summary(model))
 
     dummy_inputs = [torch.randint(low=0, high=10000, size=(4, 128))]
     print("Inference time:")
-    inference_time(model.to(args.device), dummy_inputs)
+    inference_time(model, dummy_inputs)
 
 
 def main():
@@ -93,7 +93,7 @@ def main():
 
     max_seq_length = 128
 
-    cal_plm_params(args, model)
+    cal_plm_params(model)
 
     cal_plm_flops(args, num_labels, model, tokenizer, max_seq_length)
 
