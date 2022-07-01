@@ -30,6 +30,19 @@ transformer_pruning_config = TransformerPruningConfig(
     pruning_method='iterative', n_iters=16,
     head_even_masking=False, use_logits=True)
 
+"""
+importance_score: Loss对weight的偏导 * weight
+                  (weight.grad * weight).view(weight.size(0), n_heads, -1).sum(dim=(0, 2)).abs()
+
+head_even_masking: 每一层mask掉不同数量的head，一共有12个layer，每个layer有12个head
+    importance[12, 12]: 12层里面，每一层12个head，按层进行重要性打分；
+    importance_order[144]: 对【所有的head】进行重要性得分的排序，得到[144]里面重要性的从低到高的【下标】；
+                           这些下标对应的head，分布在【不同层】；
+    mask[12, 12]: 根据排序的144个重要性得分，根据不同层的head的重要性排序，将target_size个heads在[12, 12]中进行mask置0。
+    
+    因为排序的时候是全部一起排，所以mask指定数量的head之后，每一层的head数量就基本不同了。
+    至此，就实现了在每一层mask掉不同数量的head。
+"""
 pruner = TransformerPruner(model, transformer_pruning_config=transformer_pruning_config, general_config=general_config)
 
 pruner.prune(dataloader=test_loader, save_model=True)
